@@ -1,0 +1,16 @@
+#root {
+  margin: 0 auto;
+  text-align: center;
+}
+
+ol {
+  text-align: left;
+}
+
+.source {
+  position: absolute;
+  bottom: 5vh;
+  right: 0;
+  left: 0;
+  margin-inline: 30px;
+}
