@@ -61,7 +61,7 @@ function App() {
               <button onClick={next}>Neste Kategori</button>
             }
             <div className="source">
-              <a href={categories[selectedId].kilde} target='_blank' rel='noopener noreferrer'>Kilde</a> 
+                      <a href={categories[selectedId].kilde} target='_blank' rel='noopener noreferrer'>Kilde ({ categories[selectedId].år })</a> 
             </div>
           </>
           }
