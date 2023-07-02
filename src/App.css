@@ -14,3 +14,42 @@ ol {
   left: 0;
   margin-inline: 30px;
 }
+
+.madeby {
+  margin-top: 10vh;
+}
+
+.socialmedia {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 30px;
+}
+
+.icons {
+  display: flex;
+  margin: auto;
+  width: 100%;
+  justify-content: center;
+  position: absolute;
+  bottom: 5vh;
+}
+
+.start {
+  position: relative;
+  margin-top: 35vh;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.rules {
+  text-align: left;
+  padding-inline: 15vw;
+  margin-bottom: 5vh;
+}
