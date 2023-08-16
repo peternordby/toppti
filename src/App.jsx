@@ -7,26 +7,31 @@ import { faInstagram, faGithubSquare, faLinkedin } from '@fortawesome/free-brand
 function App() {
 
   const [gamestate, setGamestate] = useState('start')
-  const [selectedId, setSelectedId] = useState(null)
-  const [previousIds, setPreviousIds] = useState([])
+  const [selectedId, setSelectedId] = useState(0)
   const [answersVisible, setAnswersVisible] = useState(false)
 
   const start = () => {
     setGamestate('started')
-    setSelectedId(Math.floor(Math.random() * categories.length))
   }
 
   const next = () => {
-    const newPreviousIds = [...previousIds, selectedId]
-    setPreviousIds(newPreviousIds)
-    let newSelectedId = Math.floor(Math.random() * categories.length)
-    while (newPreviousIds.includes(newSelectedId)) {
-      newSelectedId = Math.floor(Math.random() * categories.length)
+    if (selectedId === categories.length - 1) {
+      setGamestate('finished')
+      return
     }
-    setSelectedId(newSelectedId)
+    setSelectedId(selectedId + 1)
     setAnswersVisible(false)
   }
-
+  
+  const previous = () => {
+    if (selectedId === 0) {
+      setGamestate('start')
+      return
+    }
+    setSelectedId(selectedId - 1)
+    setAnswersVisible(false)
+  }
+  
   const showAnswers = () => {
     setAnswersVisible(true)
   }
@@ -59,16 +64,16 @@ function App() {
                   )
                 })}
               </ol>
-              {previousIds.length === categories.length - 1 ?
-                <button onClick={() => { setGamestate("finished") }}>Avslutt</button>
-                :
-                <button onClick={next}>Neste Kategori</button>
-              }
               <div className="source">
                 <a href={categories[selectedId].kilde} target='_blank' rel='noopener noreferrer'>Kilde ({ categories[selectedId].år })</a> 
               </div>
             </>
             }
+            <div className="navigation">
+              <button onClick={previous}>&lt;</button>
+              <p>{selectedId + 1} / { categories.length }</p>
+              <button onClick={next}>&gt;</button>
+            </div>
           </>
         )
       case 'finished':

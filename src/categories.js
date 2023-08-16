@@ -5,8 +5,8 @@ const categories = [
         fasit: [
             'Russland',
             'Canada',
-            'Kina',
             'USA',
+            'Kina',
             'Brasil',
             'Australia',
             'India',
@@ -14,7 +14,7 @@ const categories = [
             'Kasakhstan',
             'Algerie',
         ],
-        kilde: 'https://www.worldometers.info/geography/largest-countries-in-the-world/',
+        kilde: 'https://www.statista.com/statistics/262955/largest-countries-in-the-world/',
         år: '2023',
     },
     {
@@ -192,7 +192,7 @@ const categories = [
             'Finland',
             'Sverige',
             'Sveits',
-            'Neederland',
+            'Nederland',
         ],
         kilde: 'https://www.vg.no/spesial/2018/ol/tom/medaljer/index.php',
         år: '2018',

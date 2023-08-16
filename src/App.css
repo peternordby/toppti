@@ -9,7 +9,7 @@ ol {
 
 .source {
   position: absolute;
-  bottom: 5vh;
+  bottom: 20vh;
   right: 0;
   left: 0;
   margin-inline: 30px;
@@ -52,4 +52,13 @@ ol {
   text-align: left;
   padding-inline: 15vw;
   margin-bottom: 5vh;
+}
+
+.navigation {
+  position: absolute;
+  bottom: 5vh;
+  width: 100%;
+  display: flex;
+  gap: 10vw;
+  justify-content: center;
 }
