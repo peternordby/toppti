@@ -41,6 +41,11 @@ function App() {
     setSelectedId(categories.length - 1)
     setGamestate('started')
   }
+
+  const backToStart = () => {
+    setSelectedId(0)
+    setGamestate('start')
+  }
   
   const showAnswers = () => {
     setAnswersVisible(true)
@@ -62,7 +67,9 @@ function App() {
 
   const setBackgroundColor = () => {
     const root = document.querySelector(':root')
-    root.style.setProperty('--background-color', '#5d0707')
+    root.style.setProperty('--dark-background-color', '#5d0707')
+    root.style.setProperty('--light-background-color', '#5d0707')
+    root.style.setProperty('--light-text-color', 'rgba(255, 255, 255, 0.87)')
   }
 
   if (CHRISTMAS) {
@@ -89,11 +96,12 @@ function App() {
             <div>
               <button onClick={togglePoints}>Poeng: {points}</button>
               {pointsHistory.length > 0 && <button onClick={undoPoints} style={{ marginLeft: '10px' }}>
-                <FontAwesomeIcon icon={faUndo} size='l' style={{color: '#f9f9f9'}}/>
+                <FontAwesomeIcon icon={faUndo} size='l'/>
               </button>}
             </div>
             {pointsVisible && <div style={{
-              marginTop: '20px'
+              marginTop: '10px',
+              marginBottom: '10px',
             }}>
               <button className="pointBtn" onClick={() => updatePoints(1)}>+1</button>
               <button className="pointBtn" onClick={() => updatePoints(2)}>+2</button>
@@ -132,7 +140,10 @@ function App() {
       case 'finished':
         return (
           <>
-            <button onClick={backToLast}>&lt;</button>
+            <div>
+            <button onClick={backToStart}>Hjem</button>
+              <button onClick={backToLast} style={{marginLeft: '10px'}}>Tilbake</button>
+            </div>
             <h1>Takk for at du spilte!</h1>
             <h2>Du endte opp med {points} poeng!</h2>
             <p className='madeby'>Laget av Peter Skaar Nordby</p>

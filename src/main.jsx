@@ -7,7 +7,9 @@ import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {CHRISTMAS && <Snowfall />}
+    {CHRISTMAS && <Snowfall
+      color='rgba(255, 255, 255, 0.6)'
+    />}
     <App />
   </React.StrictMode>,
 )
