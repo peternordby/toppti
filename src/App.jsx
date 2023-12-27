@@ -3,12 +3,17 @@ import { useState } from 'react'
 import categories from './categories'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInstagram, faGithubSquare, faLinkedin } from '@fortawesome/free-brands-svg-icons'
+import { faUndo } from '@fortawesome/free-solid-svg-icons'
+import { CHRISTMAS } from './const'
 
 function App() {
 
   const [gamestate, setGamestate] = useState('start')
   const [selectedId, setSelectedId] = useState(0)
   const [answersVisible, setAnswersVisible] = useState(false)
+  const [points, setPoints] = useState(0)
+  const [pointsHistory, setPointsHistory] = useState([])
+  const [pointsVisible, setPointsVisible] = useState(false)
 
   const start = () => {
     setGamestate('started')
@@ -31,9 +36,37 @@ function App() {
     setSelectedId(selectedId - 1)
     setAnswersVisible(false)
   }
+
+  const backToLast = () => {
+    setSelectedId(categories.length - 1)
+    setGamestate('started')
+  }
   
   const showAnswers = () => {
     setAnswersVisible(true)
+  }
+
+  const togglePoints = () => {
+    setPointsVisible(!pointsVisible)
+  }
+
+  const updatePoints = (value) => {
+    setPointsHistory([...pointsHistory, points])
+    setPoints(points + value)
+    togglePoints()
+  }
+
+  const undoPoints = () => {
+    setPoints(pointsHistory.pop())
+  }
+
+  const setBackgroundColor = () => {
+    const root = document.querySelector(':root')
+    root.style.setProperty('--background-color', '#5d0707')
+  }
+
+  if (CHRISTMAS) {
+    setBackgroundColor()
   }
 
   const renderState = () => {
@@ -53,7 +86,27 @@ function App() {
       case 'started':
         return (
           <>
-            <h1>{categories[selectedId].navn}</h1>
+            <div>
+              <button onClick={togglePoints}>Poeng: {points}</button>
+              {pointsHistory.length > 0 && <button onClick={undoPoints} style={{ marginLeft: '10px' }}>
+                <FontAwesomeIcon icon={faUndo} size='l' style={{color: '#f9f9f9'}}/>
+              </button>}
+            </div>
+            {pointsVisible && <div style={{
+              marginTop: '20px'
+            }}>
+              <button className="pointBtn" onClick={() => updatePoints(1)}>+1</button>
+              <button className="pointBtn" onClick={() => updatePoints(2)}>+2</button>
+              <button className="pointBtn" onClick={() => updatePoints(3)}>+3</button>
+              <button className="pointBtn" onClick={() => updatePoints(4)}>+4</button>
+              <button className="pointBtn" onClick={() => updatePoints(5)}>+5</button>
+              <button className="pointBtn" onClick={() => updatePoints(6)}>+6</button>
+              <button className="pointBtn" onClick={() => updatePoints(7)}>+7</button>
+              <button className="pointBtn" onClick={() => updatePoints(8)}>+8</button>
+              <button className="pointBtn" onClick={() => updatePoints(9)}>+9</button>
+              <button className="pointBtn" onClick={() => updatePoints(10)}>+10</button>
+            </div>}
+            {!pointsVisible && <h1>{categories[selectedId].navn}</h1>}
             {!answersVisible && <button onClick={showAnswers}>Vis Fasit</button>}
             {answersVisible &&
             <>
@@ -79,7 +132,9 @@ function App() {
       case 'finished':
         return (
           <>
+            <button onClick={backToLast}>&lt;</button>
             <h1>Takk for at du spilte!</h1>
+            <h2>Du endte opp med {points} poeng!</h2>
             <p className='madeby'>Laget av Peter Skaar Nordby</p>
             <div className="socialmedia">
               <a href="https://www.instagram.com/peter.nordby/" target='_blank' rel='noopener noreferrer'>

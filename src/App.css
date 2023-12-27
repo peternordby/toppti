@@ -9,7 +9,7 @@ ol {
 
 .source {
   position: absolute;
-  bottom: 20vh;
+  bottom: 15vh;
   right: 0;
   left: 0;
   margin-inline: 30px;
@@ -46,6 +46,10 @@ ol {
   justify-content: center;
   align-items: center;
   gap: 20px;
+}
+
+.pointBtn {
+  margin: 10px;
 }
 
 .rules {
