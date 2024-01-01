@@ -4,7 +4,10 @@ import categories from './categories'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInstagram, faGithubSquare, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 import { faUndo } from '@fortawesome/free-solid-svg-icons'
-import { CHRISTMAS } from './const'
+import Toggle from 'react-toggle'
+import "react-toggle/style.css"
+import Snowfall from 'react-snowfall'
+import { faSnowflake } from '@fortawesome/free-regular-svg-icons'
 
 function App() {
 
@@ -14,13 +17,16 @@ function App() {
   const [points, setPoints] = useState(0)
   const [pointsHistory, setPointsHistory] = useState([])
   const [pointsVisible, setPointsVisible] = useState(false)
+  const [isChristmas, setIsChristmas] = useState(false)
+
+  const theme = isChristmas ? 'christmas' : 'default'
 
   const start = () => {
     setGamestate('started')
   }
 
   const next = () => {
-    if (selectedId === categories.length - 1) {
+    if (selectedId === categories[theme].length - 1) {
       setGamestate('finished')
       return
     }
@@ -38,7 +44,7 @@ function App() {
   }
 
   const backToLast = () => {
-    setSelectedId(categories.length - 1)
+    setSelectedId(categories[theme].length - 1)
     setGamestate('started')
   }
 
@@ -65,16 +71,21 @@ function App() {
     setPoints(pointsHistory.pop())
   }
 
-  const setBackgroundColor = () => {
+  const setBackgroundColor = (theme) => {
     const root = document.querySelector(':root')
-    root.style.setProperty('--dark-background-color', '#5d0707')
-    root.style.setProperty('--light-background-color', '#5d0707')
-    root.style.setProperty('--light-text-color', 'rgba(255, 255, 255, 0.87)')
+    if (theme === 'default') {
+      root.style.setProperty('--dark-background-color', '#242424')
+      root.style.setProperty('--light-background-color', '#ffffff')
+      root.style.setProperty('--light-text-color', '#213547')
+    }
+    else if (theme === 'christmas') {
+      root.style.setProperty('--dark-background-color', '#5d0707')
+      root.style.setProperty('--light-background-color', '#5d0707')
+      root.style.setProperty('--light-text-color', 'rgba(255, 255, 255, 0.87)')
+    }
   }
 
-  if (CHRISTMAS) {
-    setBackgroundColor()
-  }
+  setBackgroundColor(theme)
 
   const renderState = () => {
     switch (gamestate) {
@@ -86,6 +97,7 @@ function App() {
               <div className="buttons">
                 <button onClick={start}>Start</button>
                 <button onClick={() => { setGamestate("rules") }}>Regler</button>
+                <button onClick={() => { setGamestate("settings") }}>Instillinger</button>
               </div>
             </div>
           </>
@@ -114,25 +126,25 @@ function App() {
               <button className="pointBtn" onClick={() => updatePoints(9)}>+9</button>
               <button className="pointBtn" onClick={() => updatePoints(10)}>+10</button>
             </div>}
-            {!pointsVisible && <h1>{categories[selectedId].navn}</h1>}
+            {!pointsVisible && <h1>{categories[theme][selectedId].navn}</h1>}
             {!answersVisible && <button onClick={showAnswers}>Vis Fasit</button>}
             {answersVisible &&
             <>
               <ol>
-                {categories[selectedId].fasit.map((fasit, index) => {
+                {categories[theme][selectedId].fasit.map((fasit, index) => {
                   return (
                     <li key={index}>{fasit}</li>
                   )
                 })}
               </ol>
               <div className="source">
-                <a href={categories[selectedId].kilde} target='_blank' rel='noopener noreferrer'>Kilde ({ categories[selectedId].år })</a> 
+                <a href={categories[theme][selectedId].kilde} target='_blank' rel='noopener noreferrer'>Kilde ({ categories[theme][selectedId].år })</a> 
               </div>
             </>
             }
             <div className="navigation">
               <button onClick={previous}>&lt;</button>
-              <p>{selectedId + 1} / { categories.length }</p>
+              <p>{selectedId + 1} / { categories[theme].length }</p>
               <button onClick={next}>&gt;</button>
             </div>
           </>
@@ -175,6 +187,24 @@ function App() {
             <button onClick={() => { setGamestate("start") }}>Hjem</button>
           </>
         )
+      case 'settings':
+        return (
+          <>
+            <h1>Instillinger</h1>
+            <p>Juleversjon</p>
+            <Toggle
+              defaultChecked={isChristmas}
+              icons={{
+                checked: <FontAwesomeIcon icon={faSnowflake} size='xs'/>,
+                unchecked: null,
+              }}
+              
+              onChange={() => { setIsChristmas(!isChristmas) }}
+            />
+            <p></p>
+            <button onClick={() => { setGamestate("start") }}>Hjem</button>
+          </>
+        )
       default:
         return (
           <>
@@ -185,9 +215,12 @@ function App() {
   }
 
   return (
+    <>
+    {isChristmas && <Snowfall color='rgba(255, 255, 255, 0.6)' />}
     <div className="App">
       {renderState()}
     </div>
+    </>
   )
 }
 

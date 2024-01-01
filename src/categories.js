@@ -1,7 +1,5 @@
-import { CHRISTMAS } from "./const";
-
-const categories = CHRISTMAS ?
-    [
+const categories = {
+    christmas: [
         {
             id: '1',
             navn: 'Julefilmer som tjente mest penger på kino',
@@ -270,9 +268,8 @@ const categories = CHRISTMAS ?
             kilde: 'https://newzoo.com/resources/rankings/top-20-pc-games',
             år: '2023',
         }
-    ]
-    :
-    [
+    ],
+    default: [
         {
             id: '1',
             navn: 'Største land etter areal',
@@ -634,5 +631,6 @@ const categories = CHRISTMAS ?
             år: '2023',
         },
     ]
+};
 
 export default categories;
