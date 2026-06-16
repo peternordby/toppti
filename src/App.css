@@ -40,6 +40,36 @@ ol {
   margin-top: 35vh;
 }
 
+.subtitle {
+  margin-top: -0.5em;
+  margin-bottom: 1.5em;
+  opacity: 0.85;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.pointPicker {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.themePicker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 5vh;
+}
+
+.themeBtn {
+  min-width: 180px;
+}
+
+.themeBtn.active {
+  border-color: var(--accent-color);
+  outline: 2px solid var(--accent-color);
+}
+
 .buttons {
   display: flex;
   flex-direction: column;
