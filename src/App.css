@@ -123,12 +123,15 @@ button.primary {
   border-radius: 0;
   background: none;
   display: grid;
-  /* Rank, name and value on one line so all ten answers fit on a phone screen. */
-  grid-template-columns: 1.6em 1fr auto;
-  align-items: baseline;
+  /* Rank, name and value on one line so all ten answers fit on a phone screen,
+     while each row stays a comfortable 44px tap target. */
+  grid-template-columns: 1.5em 1fr auto;
+  align-items: center;
   column-gap: 8px;
-  padding: 6px 4px;
-  line-height: 1.3;
+  min-height: 44px;
+  padding: 3px 4px;
+  font-size: 17px;
+  line-height: 1.2;
 }
 
 .answers li + li .answerRow {
@@ -170,10 +173,10 @@ button.answerRow:hover,
 }
 
 .value {
-  font-size: 0.78em;
-  opacity: 0.7;
+  font-size: 14px;
+  opacity: 0.75;
   text-align: right;
-  max-width: 32vw;
+  max-width: 36vw;
 }
 
 .source {
@@ -213,8 +216,12 @@ button.answerRow:hover,
 }
 
 @media (min-width: 640px) {
+  /* Mouse pointers don't need 44px targets, which leaves room on short laptop screens. */
+  .answerRow {
+    min-height: 38px;
+  }
   .value {
-    font-size: 0.85em;
+    font-size: 15px;
   }
 }
 
@@ -262,14 +269,9 @@ input:focus-visible {
 
 .hits {
   margin-left: 6px;
-  font-size: 0.75em;
+  font-size: 13px;
   font-weight: 600;
   color: var(--accent-color);
-}
-
-.scoringBar .hint {
-  font-size: 0.85em;
-  margin-bottom: 2px;
 }
 
 .question h1 {
@@ -322,15 +324,12 @@ input:focus-visible {
 /* Short phones (e.g. iPhone SE): tighten further so the whole list still fits. */
 @media (max-height: 700px) {
   .answerRow {
-    padding-block: 3px;
-    font-size: 0.9em;
-    line-height: 1.2;
+    min-height: 38px;
+    padding-block: 2px;
+    font-size: 16px;
   }
   .question h1 {
     font-size: 1.2rem;
-  }
-  .scoringBar .hint {
-    display: none;
   }
   .teamSwitcher > button {
     min-height: 36px;
@@ -363,10 +362,6 @@ input:focus-visible {
 .activeTeam span {
   font-size: 0.8em;
   opacity: 0.75;
-}
-
-.scoringBar .hint {
-  margin-top: 4px;
 }
 
 .standingsDialog {

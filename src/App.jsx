@@ -242,8 +242,9 @@ function App() {
                       <div className="activeTeam" aria-live="polite">
                         <strong>{teams[activeTeam]}</strong>
                         <span>
-                          {scores[activeTeam]} poeng totalt
-                          {currentResults[activeTeam]?.place != null && ` · +${currentResults[activeTeam].place} denne runden`}
+                          {scores[activeTeam]} poeng
+                          {currentResults[activeTeam]?.place != null && ` (+${currentResults[activeTeam].place})`}
+                          {teams.length > 1 && ` · ${teams.filter((_, team) => currentResults[team]?.place != null).length} av ${teams.length} ferdig`}
                         </span>
                       </div>
                       <button
@@ -252,10 +253,6 @@ function App() {
                         disabled={teams.length < 2}
                       >›</button>
                     </div>
-                    <p className="hint">
-                      Trykk på svaret laget gjettet
-                      {teams.length > 1 && ` · ${teams.filter((_, team) => currentResults[team]?.place != null).length} av ${teams.length} lag ferdig`}
-                    </p>
                   </div>}
                   <ol className="answers">
                     {current.fasit.map((fasit, index) => {
