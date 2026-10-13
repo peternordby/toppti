@@ -6,6 +6,8 @@ const setupTeams = async (page, names) => {
   for (let i = 1; i < names.length; i++) await page.getByRole('button', { name: '+ Legg til lag' }).click()
   for (const [i, name] of names.entries()) await page.getByLabel(`Navn på lag ${i + 1}`, { exact: true }).fill(name)
   await page.getByRole('button', { name: 'Start' }).click()
+  // Measurements depend on the bundled font, so wait until it has loaded.
+  await page.evaluate(() => document.fonts.ready)
 }
 
 const answerRows = (page) => page.locator('.answerRow')
@@ -88,7 +90,7 @@ test('the whole list fits above the navigation for every question with 10 teams'
       const rows = document.querySelectorAll('.answerRow')
       return rows[rows.length - 1].getBoundingClientRect().bottom - document.querySelector('.navigation').getBoundingClientRect().top
     })
-    expect(overflow, `question ${q}`).toBeLessThanOrEqual(0)
+    expect(overflow, `question ${q} («${await page.locator('h1').innerText()}») overflows the bottom nav by ${Math.round(overflow)}px`).toBeLessThanOrEqual(0)
     if (q < 20) await page.getByRole('button', { name: 'Neste ›' }).click()
   }
 })
